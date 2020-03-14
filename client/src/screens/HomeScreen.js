@@ -9,13 +9,14 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { clearToken } from "../components/utils";
 import { FontAwesome } from "@expo/vector-icons";
-import Colors from "../components/Color";
 import { useQuery } from "@apollo/react-hooks";
 import { CATEGORIES_QUERY } from "../gql/Queries";
+import Color from "../components/Color";
 import CategoryItem from "../components/CategoryItem";
 
 const HomeScreen = ({ navigation }) => {
   const { loading, data } = useQuery(CATEGORIES_QUERY);
+
   const logout = () => {
     clearToken();
     navigation.navigate("Login");
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   header: {
-    backgroundColor: Colors.primary,
+    backgroundColor: Color.primary,
     height: 60,
     justifyContent: "center"
   },
