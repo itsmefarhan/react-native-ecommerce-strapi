@@ -14,6 +14,7 @@ import Login from "./src/screens/LoginScreen";
 import Logout from "./src/screens/Logout";
 import HomeScreen from "./src/screens/HomeScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
+import Products from './src/screens/Products'
 
 const client = new ApolloClient({
   uri: "http://192.168.0.103:1337/graphql",
@@ -81,7 +82,14 @@ export default function App() {
               headerTitle: null
             }}
           />
-          <Stack.Screen name="Home" component={TabNav} />
+          <Stack.Screen
+            name="Home"
+            component={TabNav}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen name="Products" component={Products} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>
