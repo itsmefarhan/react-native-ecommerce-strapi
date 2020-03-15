@@ -17,12 +17,14 @@ const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // useEffect(()=>{
-  //   const token = async ()=>{
-  //     await AsyncStorage.removeItem('jwt')
-  //   }
-  //   token()
-  // },[])
+  // useEffect(() => {
+  //   const token = async () => {
+  //     await AsyncStorage.removeItem("jwt");
+  //     // const a = await AsyncStorage.getItem("jwt");
+  //     // console.log(a)
+  //   };
+  //   token();
+  // }, []);
 
   const [login] = useMutation(LOGIN_USER, {
     update: async (_, result) => {

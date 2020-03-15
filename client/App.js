@@ -11,13 +11,13 @@ import { Ionicons } from "@expo/vector-icons";
 import Color from "./src/components/Color";
 import Register from "./src/screens/RegisterScreen";
 import Login from "./src/screens/LoginScreen";
-import Logout from "./src/screens/Logout";
 import HomeScreen from "./src/screens/HomeScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
-import Products from './src/screens/Products'
+import Products from "./src/screens/Products";
+import { API_URL } from "./src/components/utils";
 
 const client = new ApolloClient({
-  uri: "http://192.168.0.103:1337/graphql",
+  uri: `${API_URL}/graphql`,
   request: async operation => {
     const token = await AsyncStorage.getItem("jwt");
     operation.setContext({
@@ -60,7 +60,6 @@ function DrawNav() {
     <Draw.Navigator>
       <Draw.Screen name="Register" component={Register} />
       <Draw.Screen name="Login" component={Login} />
-      <Draw.Screen name="Logout" component={Logout} />
     </Draw.Navigator>
   );
 }

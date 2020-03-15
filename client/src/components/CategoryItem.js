@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { API_URL } from "./utils";
 
 const CategoryItem = ({ item }) => {
   const navigation = useNavigation();
@@ -11,10 +12,7 @@ const CategoryItem = ({ item }) => {
       style={styles.container}
       onPress={() => navigation.navigate("Products", { _id })}
     >
-      <Image
-        source={{ uri: `http://192.168.0.103:1337${image.url}` }}
-        style={styles.image}
-      />
+      <Image source={{ uri: `${API_URL}${image.url}` }} style={styles.image} />
       <Text style={styles.text}>{name}</Text>
     </TouchableOpacity>
   );
