@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import { TextInput } from "react-native-paper";
+import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@apollo/react-hooks";
 import { CATEGORY_QUERY } from "../gql/Queries";
 import ProductItem from "../components/ProductItem";
@@ -8,6 +14,7 @@ import Color from "../components/Color";
 
 const Products = ({ route, navigation }) => {
   const [newData, setNewData] = useState();
+
   const { _id } = route.params;
 
   const { loading, data } = useQuery(CATEGORY_QUERY, {
@@ -23,12 +30,18 @@ const Products = ({ route, navigation }) => {
     );
   }
 
-  navigation.setOptions({
-    headerTitle: data.category.name
-  });
-
   const { products } = data.category;
 
+  navigation.setOptions({
+    headerTitle: data.category.name,
+    headerRight: () => (
+      <TouchableOpacity style={{ marginRight: 18 }} onPress={() => {}}>
+        <FontAwesome name="shopping-cart" size={25} color="white" />
+      </TouchableOpacity>
+    )
+  });
+
+  // Filter products based on search input
   const filteredProducts = text => {
     const data = products.filter(
       product =>

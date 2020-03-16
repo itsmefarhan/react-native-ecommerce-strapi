@@ -1,12 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-paper";
 import Color from "../components/Color";
 import { API_URL } from "../components/utils";
+import { setCart, getCart, clearCart } from "../components/utils";
 
 const ProductItem = ({ item }) => {
+  const [cartItems, setCartItems] = useState([]);
   const navigation = useNavigation();
+
+  // Get cart on component mount
+  useEffect(() => {
+    getCart()
+      .then(data => setCartItems(JSON.parse(data)))
+      .catch(e => console.log(e));
+    // clearCart()
+  }, []);
+
+  // console.log(cartItems);
+
+  // Add to cart
+  const addToCart = product => {
+    const index = cartItems.findIndex(item => item._id == product._id);
+    // if item is not already in cart
+    if (index === -1) {
+      cartItems.push({
+        ...product,
+        quantity: 1
+      });
+      const updateCart = [...cartItems];
+      setCartItems(updateCart);
+      setCart(updateCart);
+    } else {
+      // if item already in cart
+      cartItems[index].quantity += 1;
+      const updateCart = [...cartItems];
+      setCartItems(updateCart);
+      setCart(updateCart);
+    }
+  };
 
   const { _id, name, image, description, price } = item;
   return (
@@ -18,7 +51,11 @@ const ProductItem = ({ item }) => {
         <Text style={[styles.shared, { color: "red", fontWeight: "bold" }]}>
           ${price}
         </Text>
-        <Button icon="cart" theme={{ colors: { primary: Color.primary } }}>
+        <Button
+          icon="cart"
+          theme={{ colors: { primary: Color.primary } }}
+          onPress={() => addToCart(item)}
+        >
           Add To Cart
         </Button>
       </View>

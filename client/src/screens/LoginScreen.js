@@ -12,19 +12,22 @@ import { TextInput, Title, Button } from "react-native-paper";
 import Color from "../components/Color";
 import { useMutation } from "@apollo/react-hooks";
 import { LOGIN_USER } from "../gql/Mutations";
+import { getToken } from "../components/utils";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useState();
 
-  // useEffect(() => {
-  //   const token = async () => {
-  //     await AsyncStorage.removeItem("jwt");
-  //     // const a = await AsyncStorage.getItem("jwt");
-  //     // console.log(a)
-  //   };
-  //   token();
-  // }, []);
+  useEffect(() => {
+    //   const token = async () => {
+    //     await AsyncStorage.removeItem("jwt");
+    //     // const a = await AsyncStorage.getItem("jwt");
+    //     // console.log(a)
+    //   };
+    //   token();
+    getToken().then(data => setToken(data));
+  }, []);
 
   const [login] = useMutation(LOGIN_USER, {
     update: async (_, result) => {
@@ -39,6 +42,10 @@ const LoginScreen = ({ navigation }) => {
     setUsername("");
     setPassword("");
   };
+
+  if(token){
+    navigation.navigate('Home')
+  }
 
   return (
     <KeyboardAvoidingView
