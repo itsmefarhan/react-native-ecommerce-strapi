@@ -16,7 +16,7 @@ export const setCart = async value => {
 };
 
 export const getCart = async () => {
-  if (AsyncStorage && await AsyncStorage.getItem("cart")) {
+  if (AsyncStorage && (await AsyncStorage.getItem("cart"))) {
     return await AsyncStorage.getItem("cart");
   }
   return [];
@@ -24,6 +24,18 @@ export const getCart = async () => {
 
 export const clearCart = async () => {
   await AsyncStorage.removeItem("cart");
+};
+
+export const calculatePrice = items => {
+  return `${items
+    .reduce((acc, item) => acc + item.quantity * item.price, 0)
+    .toFixed(2)}`;
+};
+
+export const calculateAmount = items => {
+  return Number(
+    items.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
+  );
 };
 
 export const API_URL = "http://192.168.0.104:1337";

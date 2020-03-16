@@ -19,13 +19,13 @@ const Products = ({ route, navigation }) => {
 
   // Get cart on component mount
   useEffect(() => {
-    getCart()
-      .then(data => setCartItems(JSON.parse(data)))
-      .catch(e => console.log(e));
-    // clearCart()
-  }, []);
-
-  // console.log(cartItems);
+    const sub = navigation.addListener("focus", () => {
+      getCart()
+        .then(data => setCartItems(JSON.parse(data)))
+        .catch(e => console.log(e));
+    });
+    return sub;
+  }, [navigation]);
 
   // Add to cart
   const addToCart = product => {
@@ -68,7 +68,10 @@ const Products = ({ route, navigation }) => {
   navigation.setOptions({
     headerTitle: data.category.name,
     headerRight: () => (
-      <TouchableOpacity style={{ marginRight: 18 }} onPress={() => {}}>
+      <TouchableOpacity
+        style={{ marginRight: 18 }}
+        onPress={() => navigation.navigate("Cart", { cartItems })}
+      >
         <FontAwesome name="shopping-cart" size={25} color="white" />
       </TouchableOpacity>
     )

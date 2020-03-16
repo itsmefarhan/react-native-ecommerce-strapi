@@ -14,6 +14,7 @@ import Login from "./src/screens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import Products from "./src/screens/Products";
+import CartScreen from "./src/screens/CartScreen";
 import { API_URL } from "./src/components/utils";
 
 const client = new ApolloClient({
@@ -89,6 +90,7 @@ export default function App() {
             }}
           />
           <Stack.Screen name="Products" component={Products} />
+          <Stack.Screen name="Cart" component={CartScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>
