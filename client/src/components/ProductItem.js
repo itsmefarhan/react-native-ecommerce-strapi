@@ -1,47 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-paper";
 import Color from "../components/Color";
 import { API_URL } from "../components/utils";
-import { setCart, getCart, clearCart } from "../components/utils";
 
-const ProductItem = ({ item }) => {
-  const [cartItems, setCartItems] = useState([]);
-  const navigation = useNavigation();
-
-  // Get cart on component mount
-  useEffect(() => {
-    getCart()
-      .then(data => setCartItems(JSON.parse(data)))
-      .catch(e => console.log(e));
-    // clearCart()
-  }, []);
-
-  // console.log(cartItems);
-
-  // Add to cart
-  const addToCart = product => {
-    const index = cartItems.findIndex(item => item._id == product._id);
-    // if item is not already in cart
-    if (index === -1) {
-      cartItems.push({
-        ...product,
-        quantity: 1
-      });
-      const updateCart = [...cartItems];
-      setCartItems(updateCart);
-      setCart(updateCart);
-    } else {
-      // if item already in cart
-      cartItems[index].quantity += 1;
-      const updateCart = [...cartItems];
-      setCartItems(updateCart);
-      setCart(updateCart);
-    }
-  };
-
-  const { _id, name, image, description, price } = item;
+const ProductItem = ({ item, addToCart }) => {
+  const { name, image, description, price } = item;
   return (
     <View style={styles.container}>
       <Image source={{ uri: `${API_URL}${image.url}` }} style={styles.image} />

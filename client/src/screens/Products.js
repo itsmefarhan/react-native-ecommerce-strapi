@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -11,9 +11,42 @@ import { useQuery } from "@apollo/react-hooks";
 import { CATEGORY_QUERY } from "../gql/Queries";
 import ProductItem from "../components/ProductItem";
 import Color from "../components/Color";
+import { getCart, clearCart, setCart } from "../components/utils";
 
 const Products = ({ route, navigation }) => {
+  const [cartItems, setCartItems] = useState([]);
   const [newData, setNewData] = useState();
+
+  // Get cart on component mount
+  useEffect(() => {
+    getCart()
+      .then(data => setCartItems(JSON.parse(data)))
+      .catch(e => console.log(e));
+    // clearCart()
+  }, []);
+
+  // console.log(cartItems);
+
+  // Add to cart
+  const addToCart = product => {
+    const index = cartItems.findIndex(item => item._id == product._id);
+    // if item is not already in cart
+    if (index === -1) {
+      cartItems.push({
+        ...product,
+        quantity: 1
+      });
+      const updateCart = [...cartItems];
+      setCartItems(updateCart);
+      setCart(updateCart);
+    } else {
+      // if item already in cart
+      cartItems[index].quantity += 1;
+      const updateCart = [...cartItems];
+      setCartItems(updateCart);
+      setCart(updateCart);
+    }
+  };
 
   const { _id } = route.params;
 
@@ -63,7 +96,9 @@ const Products = ({ route, navigation }) => {
       <FlatList
         keyExtractor={item => item._id}
         data={newData && newData.length !== 0 ? newData : products}
-        renderItem={({ item }) => <ProductItem item={item} />}
+        renderItem={({ item }) => (
+          <ProductItem item={item} addToCart={addToCart} />
+        )}
       />
     </>
   );
