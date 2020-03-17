@@ -1,5 +1,11 @@
 import React from "react";
-import { Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { API_URL } from "./utils";
 
@@ -18,12 +24,14 @@ const CategoryItem = ({ item }) => {
   );
 };
 
+const { width } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   container: {
-    margin: 5
+    margin: 5    
   },
   image: {
-    width: 180,
+    width: width * 0.45,
     height: 200
   },
   text: {

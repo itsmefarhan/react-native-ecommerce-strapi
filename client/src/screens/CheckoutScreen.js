@@ -10,7 +10,7 @@ import {
 import Color from "../components/Color";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_ORDER } from "../gql/Mutations";
-import config from '../../../myconfig'
+// import config from "../../../myconfig";
 
 const CheckoutScreen = ({ route, navigation }) => {
   const { data } = route.params;

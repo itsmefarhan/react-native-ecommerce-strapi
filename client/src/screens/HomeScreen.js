@@ -41,6 +41,7 @@ const HomeScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <FlatList
+        contentContainerStyle={{ alignItems: "center" }}
         keyExtractor={item => item._id}
         numColumns={2}
         data={categories}

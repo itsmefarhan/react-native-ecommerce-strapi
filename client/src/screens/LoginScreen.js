@@ -57,18 +57,20 @@ const LoginScreen = ({ navigation }) => {
         theme={{ colors: { primary: Color.primary } }}
         label="Username"
         mode="outlined"
+        autoCapitalize='none'
+        style={styles.input}
         value={username}
         onChangeText={e => setUsername(e)}
-        style={styles.input}
       />
       <TextInput
         theme={{ colors: { primary: Color.primary } }}
         label="Password"
-        secureTextEntry
         mode="outlined"
+        secureTextEntry
+        autoCapitalize='none'
+        style={styles.input}
         value={password}
         onChangeText={e => setPassword(e)}
-        style={styles.input}
       />
       <Button
         icon="login"
