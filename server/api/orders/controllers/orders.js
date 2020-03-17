@@ -1,5 +1,5 @@
 "use strict";
-const config = require("../../../../myconfig");
+const config = require("../../../../client/myconfig");
 const stripe = require("stripe")(config.SECRET_KEY);
 /**
  * Read the documentation (https://strapi.io/documentation/3.0.0-beta.x/concepts/controllers.html#core-controllers)
