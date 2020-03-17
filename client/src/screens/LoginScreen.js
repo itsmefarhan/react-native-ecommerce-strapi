@@ -20,12 +20,6 @@ const LoginScreen = ({ navigation }) => {
   const [token, setToken] = useState();
 
   useEffect(() => {
-    //   const token = async () => {
-    //     await AsyncStorage.removeItem("jwt");
-    //     // const a = await AsyncStorage.getItem("jwt");
-    //     // console.log(a)
-    //   };
-    //   token();
     getToken().then(data => setToken(data));
   }, []);
 
@@ -43,8 +37,8 @@ const LoginScreen = ({ navigation }) => {
     setPassword("");
   };
 
-  if(token){
-    navigation.navigate('Home')
+  if (token) {
+    navigation.navigate("Home");
   }
 
   return (
@@ -57,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
         theme={{ colors: { primary: Color.primary } }}
         label="Username"
         mode="outlined"
-        autoCapitalize='none'
+        autoCapitalize="none"
         style={styles.input}
         value={username}
         onChangeText={e => setUsername(e)}
@@ -67,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
         label="Password"
         mode="outlined"
         secureTextEntry
-        autoCapitalize='none'
+        autoCapitalize="none"
         style={styles.input}
         value={password}
         onChangeText={e => setPassword(e)}
@@ -83,9 +77,7 @@ const LoginScreen = ({ navigation }) => {
       </Button>
       <View style={styles.para}>
         <Text style={{ color: Color.accent }}>Not a user? </Text>
-        <TouchableOpacity
-          onPress={() => navigation.replace("Auth", { screen: "Register" })}
-        >
+        <TouchableOpacity onPress={() => navigation.replace("Register")}>
           <Text style={{ color: Color.primary }}>Register</Text>
         </TouchableOpacity>
       </View>

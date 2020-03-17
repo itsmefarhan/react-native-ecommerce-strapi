@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TouchableOpacity,
@@ -12,11 +12,17 @@ import { TextInput, Title, Button } from "react-native-paper";
 import Color from "../components/Color";
 import { useMutation } from "@apollo/react-hooks";
 import { REGISTER_USER } from "../gql/Mutations";
+import { getToken } from "../components/utils";
 
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useState();
+
+  useEffect(() => {
+    getToken().then(data => setToken(data));
+  }, []);
 
   const [register] = useMutation(REGISTER_USER, {
     async update(_, result) {
@@ -36,6 +42,10 @@ const RegisterScreen = ({ navigation }) => {
     setPassword("");
   };
 
+  if (token) {
+    navigation.navigate("Home");
+  }
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -46,7 +56,7 @@ const RegisterScreen = ({ navigation }) => {
         theme={{ colors: { primary: Color.primary } }}
         label="Username"
         mode="outlined"
-        autoCapitalize='none'
+        autoCapitalize="none"
         style={styles.input}
         value={username}
         onChangeText={e => setUsername(e)}
@@ -55,7 +65,7 @@ const RegisterScreen = ({ navigation }) => {
         theme={{ colors: { primary: Color.primary } }}
         label="Email"
         mode="outlined"
-        autoCapitalize='none'
+        autoCapitalize="none"
         style={styles.input}
         value={email}
         onChangeText={e => setEmail(e)}
@@ -65,7 +75,7 @@ const RegisterScreen = ({ navigation }) => {
         label="Password"
         mode="outlined"
         secureTextEntry
-        autoCapitalize='none'
+        autoCapitalize="none"
         style={styles.input}
         value={password}
         onChangeText={e => setPassword(e)}
@@ -81,7 +91,7 @@ const RegisterScreen = ({ navigation }) => {
       </Button>
       <View style={styles.para}>
         <Text style={{ color: Color.accent }}>Already a user? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity onPress={() => navigation.replace("Login")}>
           <Text style={{ color: Color.primary }}>Login</Text>
         </TouchableOpacity>
       </View>

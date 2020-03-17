@@ -2,7 +2,6 @@ import React from "react";
 import { AsyncStorage } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -11,13 +10,13 @@ import { Ionicons } from "@expo/vector-icons";
 import Register from "./src/screens/RegisterScreen";
 import Login from "./src/screens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
-import ProfileScreen from "./src/screens/ProfileScreen";
 import Products from "./src/screens/Products";
 import CartScreen from "./src/screens/CartScreen";
-import CheckoutScreen from './src/screens/CheckoutScreen'
+import CheckoutScreen from "./src/screens/CheckoutScreen";
 
 import { API_URL } from "./src/components/utils";
 import Color from "./src/components/Color";
+import Logout from "./src/components/Logout";
 
 const client = new ApolloClient({
   uri: `${API_URL}/graphql`,
@@ -25,7 +24,7 @@ const client = new ApolloClient({
     const token = await AsyncStorage.getItem("jwt");
     operation.setContext({
       headers: {
-        "Authorization": token ? `Bearer ${JSON.parse(token)}` : ""
+        Authorization: token ? `Bearer ${JSON.parse(token)}` : ""
       }
     });
   }
@@ -33,37 +32,35 @@ const client = new ApolloClient({
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const Draw = createDrawerNavigator();
 
 function TabNav() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: Color.primary,
+        inactiveTintColor: Color.accent
+      }}
+    >
       <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{
           tabBarLabel: "Home",
-          tabBarIcon: () => <Ionicons name="md-home" size={25} />
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="md-home" size={25} color={color} />
+          )
         }}
       />
       <Tab.Screen
-        name="ProfileScreen"
-        component={ProfileScreen}
+        name="Logout"
+        children={Logout}
         options={{
-          tabBarLabel: "Profile",
-          tabBarIcon: () => <Ionicons name="md-home" size={25} />
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="md-log-out" size={25} color={color} />
+          )
         }}
       />
     </Tab.Navigator>
-  );
-}
-
-function DrawNav() {
-  return (
-    <Draw.Navigator>
-      <Draw.Screen name="Register" component={Register} />
-      <Draw.Screen name="Login" component={Login} />
-    </Draw.Navigator>
   );
 }
 
@@ -77,13 +74,8 @@ export default function App() {
             headerTintColor: "white"
           }}
         >
-          <Stack.Screen
-            name="Auth"
-            component={DrawNav}
-            options={{
-              headerTitle: null
-            }}
-          />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Login" component={Login} />
           <Stack.Screen
             name="Home"
             component={TabNav}
