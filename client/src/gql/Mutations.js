@@ -25,3 +25,17 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const CREATE_ORDER = gql`
+  mutation($input: createOrderInput!) {
+    createOrder(input: $input) {
+      order {
+        address
+        postalCode
+        city
+        products
+        amount
+      }
+    }
+  }
+`;

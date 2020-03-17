@@ -11,7 +11,7 @@ import { Title, Button } from "react-native-paper";
 import { calculatePrice, setCart } from "../components/utils";
 import Color from "../components/Color";
 
-const CartScreen = ({ route }) => {
+const CartScreen = ({ route, navigation }) => {
   const { cartItems } = route.params;
   const [data, setData] = useState(cartItems);
 
@@ -44,20 +44,26 @@ const CartScreen = ({ route }) => {
           </View>
         )}
       />
-      <View style={styles.view}>
-        <Text style={styles.total}>Total: </Text>
-        <Text style={[styles.total, { marginRight: 40 }]}>
-          ${calculatePrice(data)}
-        </Text>
-      </View>
-      <TouchableOpacity onPress={() => {}}>
-        <Button
-          icon="currency-usd"
-          theme={{ colors: { primary: Color.primary } }}
-        >
-          Checkout
-        </Button>
-      </TouchableOpacity>
+      {calculatePrice(data) === "0.00" ? (
+        <Text style={styles.nullText}>Please add items to your cart</Text>
+      ) : (
+        <>
+          <View style={styles.view}>
+            <Text style={styles.total}>Total: </Text>
+            <Text style={[styles.total, { marginRight: 40 }]}>
+              ${calculatePrice(data)}
+            </Text>
+          </View>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Checkout", { data })}
+          >
+            <Button theme={{ colors: { primary: Color.primary } }}>
+              Checkout
+            </Button>
+          </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 };
@@ -93,6 +99,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "red",
     marginLeft: 10
+  },
+  nullText: {
+    alignSelf: "center",
+    fontSize: 18,
+    color: "red"
   }
 });
 

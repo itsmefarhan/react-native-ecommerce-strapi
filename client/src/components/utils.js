@@ -23,7 +23,7 @@ export const getCart = async () => {
 };
 
 export const clearCart = async () => {
-  await AsyncStorage.removeItem("cart");
+  return await AsyncStorage.removeItem("cart");
 };
 
 export const calculatePrice = items => {

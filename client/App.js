@@ -8,14 +8,16 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { Ionicons } from "@expo/vector-icons";
 
-import Color from "./src/components/Color";
 import Register from "./src/screens/RegisterScreen";
 import Login from "./src/screens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import Products from "./src/screens/Products";
 import CartScreen from "./src/screens/CartScreen";
+import CheckoutScreen from './src/screens/CheckoutScreen'
+
 import { API_URL } from "./src/components/utils";
+import Color from "./src/components/Color";
 
 const client = new ApolloClient({
   uri: `${API_URL}/graphql`,
@@ -91,6 +93,7 @@ export default function App() {
           />
           <Stack.Screen name="Products" component={Products} />
           <Stack.Screen name="Cart" component={CartScreen} />
+          <Stack.Screen name="Checkout" component={CheckoutScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>
